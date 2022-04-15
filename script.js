@@ -11,8 +11,12 @@ class Todo {
 class TodoService {
     _todos;
 
-    constructor() {
+    constructor(todos = []) {
         this._init();
+        if (!this._todos.length) {
+            this._todos = todos;
+            this._commit();
+        }
     }
 
     //take from local storage
@@ -65,6 +69,7 @@ class TodoService {
     deleteTodo(id) {
         this._todos = this._todos.filter(t => t.id !== id);
         this._commit();
+        
     }
 
     _getIndex(id) {
@@ -103,13 +108,9 @@ class Application {
     }
     _displayTodos() {
         const todos = this.todos;
- 
-        
-        this._todoList.innerHTML = '';
-
-        this._todoList.innerHTML = todos?.length ? '' : '<div class="fs-1 text-center text-muted text-nowrap bd-highlight">There are no elements yet...</div>';
+        // this._todoList.innerHTML = todos?.length ? '' : '<div class="fs-1 text-center text-muted text-nowrap bd-highlight"></div>';
        
-        this.todos.forEach(t => {
+        const items = this.todos.map(t => {//map edirik ki bize return etsin listitemleri
             const listItem = document.createElement('li');
             const input = document.createElement('input');
             input.value = t.title;
@@ -121,8 +122,11 @@ class Application {
             deleteBtn.innerHTML = '<img src="./assets/remove-input.svg">';
             deleteBtn.addEventListener('click', e => this._handleDelete(t.id));
             listItem.append(deleteBtn);
-            this._todoList.append(listItem);
+            // this._todoList.append(listItem);
+            return listItem;
         });
+        this._todoList.innerHTML = '';
+        this._todoList.append(...items);
     }
     
     _handleAdd() {
@@ -155,6 +159,8 @@ class Application {
         /** @type {HTMLImageElement} */
         let img = this._sortBtn.firstChild;
         img.src = this._sortDirection ? './assets/order.svg' : './assets/order-down.svg';
+
+        
     }
 
     _showError(error) {
@@ -170,14 +176,14 @@ class Application {
      */
     _getElement(selector) {
         const element = document.querySelector(selector);
-
+        
         if (element) return element;
         throw new Error(`There are no such element for ${selector} selector.`);
     }
 }
 
 
-const app = new Application(new TodoService());
+const app = new Application(new TodoService([{id:1,title:''}]));
 
 
 

@@ -7,6 +7,7 @@ body {
     justify-content: center;
     font-family: 'Roboto', sans-serif;
     background: linear-gradient(135deg, orange 30%, cyan);
+    min-width: 200px;
 }
 
 .yellow {
@@ -115,7 +116,12 @@ li{
 }
 ul{
     padding: 20px;
+    width: 70%;
+    border: 1px solid #C4C4C4;
+    box-sizing: border-box;
+    border-radius: 10px;
 }
+
 input {
     min-height: 40px;
     width: 70%;
@@ -123,6 +129,8 @@ input {
     box-sizing: border-box;
     border-radius: 70px;
     flex-grow: 2;
+    border: 0;
+    outline: none;
 }
 .remove {
     width: 20px;
@@ -143,3 +151,17 @@ padding-right: 12px;
 .add-text {
     margin-left: 20%;
 }
+.input-hr{
+    display: flex;
+    justify-content: center;
+}
+@media  screen and (min-width: 320px) and (max-width: 992px) {
+   .container{
+       width: 70%;
+   }
+}
+@media  screen and (min-width:992px) and (max-width: 1250px) {
+    .container{
+        width: 50%;
+    }
+ }
