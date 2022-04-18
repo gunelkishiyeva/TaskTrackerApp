@@ -64,6 +64,11 @@ class TodoService {
         }
         this._todos = todos;
         this._commit();
+
+
+        if (!this._todos.some(t => !t.title)) {
+            alert('There is no element for sorting.')
+        }
     }
 
     deleteTodo(id) {
